@@ -241,6 +241,15 @@ export const Todos = (props: TodosProps) => {
     setState({ ...state, todos })
   }
 
+  const [showImage, setShowImage] = useState<{ [key: string]: boolean }>({})
+  
+  const handleImageError = (todoId: string) => {
+    setShowImage((prevState) => ({
+      ...prevState,
+      [todoId]: false,
+    }));
+  };
+
   const renderTodosList = () => {
     return (
       <Grid padded>
@@ -298,9 +307,16 @@ export const Todos = (props: TodosProps) => {
                   <Icon name="delete" />
                 </Button>
               </Grid.Column>
-              {!!todo.attachmentUrl && (
-                <Image src={todo.attachmentUrl} size="small" wrapped />
+              
+              {todo.attachmentUrl && showImage[todo.todoId] !== false && (
+                <Image
+                  src={todo.attachmentUrl}
+                  size="small"
+                  wrapped
+                  onError={() => handleImageError(todo.todoId)} // Gọi hàm khi có lỗi tải ảnh
+                />
               )}
+              
               <MyTextArea
                 defaultValue={todo.note}
                 onChange={(value: string) => onChangeNote(value, todo.todoId)}

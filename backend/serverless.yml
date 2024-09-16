@@ -33,19 +33,7 @@ provider:
   logs:
     # Enable API Gateway logs
     restApi: true
-
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - xray:PutTelemetryRecords
-            - xray:PutTraceSegments
-            - "cloudwatch:*"
-          Resource: "*"
-
-# cloudwatch:PutMetricData:
-#       Resource: "*"          
+         
 
 custom:
   documentation:
